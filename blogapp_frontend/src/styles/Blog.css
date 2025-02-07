@@ -1,0 +1,18 @@
+.blog-container {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center horizontally */
+    min-height: 100vh; /* Make sure it covers the full viewport */
+    text-align: center; /* Center text content */
+}
+
+.add-comment-btn {
+    padding: 10px 15px;
+    background-color: #333;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

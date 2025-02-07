@@ -1,0 +1,11 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+img{
+    height: 250px;
+    width: 450px;
+    object-fit: contain;
+}

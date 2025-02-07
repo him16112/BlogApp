@@ -1,0 +1,55 @@
+/* Style for the comments heading */
+.heading{
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #333;
+}
+
+/* Comment container */
+.all-comments {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 500px;
+    margin: auto;
+}
+
+/* Individual comment box */
+.comment-item {
+   width: 100%;
+    cursor: pointer;
+    background: #f8f9fa;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.comment-item:hover {
+    transform: translateY(-2px);
+}
+
+/* Comment text */
+.comment-item p {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+/* Username style */
+.comment-item span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #007bff;
+    display: block;
+}

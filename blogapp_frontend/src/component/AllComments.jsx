@@ -11,7 +11,7 @@ const AllComments = ({ allComments, blog, commentDelete, commentEdit }) => {
   return (
     <>
       <div className="comment-content-container">
-        <p className="heading">Comments {allComments.length}</p>
+        <p className="heading">{allComments.length} Comments </p>
         <ul className="all-comments">
           {allComments?.map((data, ind) => (
             <div className="main-comment-container" key={data._id}>
@@ -40,7 +40,6 @@ const AllComments = ({ allComments, blog, commentDelete, commentEdit }) => {
                   </button>
                 )}
               </div>
-
               {isEditButtonClicked && ind === index && <CommentCreate comment={editedComment} setComment={setEditedComment} commentCreate={()=>commentEdit(editedComment) }/>}
             </div>
           ))}

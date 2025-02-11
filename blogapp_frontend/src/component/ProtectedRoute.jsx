@@ -6,9 +6,6 @@ const ProtectedRoute = () => {
     const location = useLocation();
 
     useEffect(() => {
-        console.log("Protected Route Accessed:", location.pathname);
-       // console.log("Token:", localStorage.getItem("token"));
-
         const checkTokenValidity = async () => {
             const token = localStorage.getItem("token");
             if (!token) {

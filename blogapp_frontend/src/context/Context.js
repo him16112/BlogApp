@@ -1,4 +1,4 @@
-import React, { createContext, use, useState} from 'react';
+import React, { createContext, useState} from 'react';
 
 export const BlogContext = createContext();
 
@@ -7,12 +7,11 @@ export const BlogContext = createContext();
 export const BlogProvider = ({ children }) => {
     const [isBlogCreated, setIsBlogCreated] = useState(false);
     const [refresh, setRefresh] = useState(false);
-    const [allComments, setAllComments] = useState([]);
-
-
+    const [isEditButtonClicked, setIsEditButtonClicked] = useState(false); 
+  
    
     return (
-        <BlogContext.Provider value={{ isBlogCreated, setIsBlogCreated, refresh, setRefresh}}>
+        <BlogContext.Provider value={{ isBlogCreated, setIsBlogCreated, refresh, setRefresh, isEditButtonClicked, setIsEditButtonClicked}}>
             {children}
         </BlogContext.Provider>
     );

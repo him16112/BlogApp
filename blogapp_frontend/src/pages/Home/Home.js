@@ -21,7 +21,7 @@ const Home = () => {
             <div className="home-container">
                 <ul className="blog-list">
                     {blogs.map((blog) => (
-                        <li key={blog._id} className="blog-item" onClick={() => blogView(navigate, blog)}>
+                        <li key={blog._id} className="blog-item" onClick={() => blogView(navigate, blog._id)}>
                             <div className="title">{blog.title}</div>
                             <div className="paragraph">{blog.paragraph}</div>
                             <div className="username">{blog.username}</div>

@@ -24,6 +24,6 @@ export const fetchBlogs = async (setBlogs, setIsBlogCreated) => {
 };
 
 // Function to navigate to the specific blog view
-export const blogView = (navigate, blog) => {
-  navigate("/blog", { state: { blog } });
+export const blogView = (navigate, blogId) => {
+  navigate("/blog", { state: { blogId } });
 };

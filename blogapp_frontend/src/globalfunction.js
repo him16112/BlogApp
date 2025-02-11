@@ -21,7 +21,72 @@ const getBase64Image = (imageFile) => {
   });
 };
 
+// export const validateData = (data, setMssg) => {
+//   // Validation for title and paragraph
+//   if (!data.title || !data.paragraph) {
+//     if (!data.title) {
+//       setMssg("Title is required!");
+//     } else if (!data.paragraph) {
+//       setMssg("Paragraph is required!");
+//     }
+//     return null; // Return null if validation fails
+//   }
+// };
+
+
+export const saveDraft = async (blogData, setBlogData, setIsClicked, setRefresh, refresh) => {
+  const loggedinName = localStorage.getItem("username");
+  const requestData = {...blogData, username: loggedinName};
+  let existingDrafts = JSON.parse(localStorage.getItem(loggedinName)) || [];
+  existingDrafts.push(requestData);
+  localStorage.setItem(loggedinName, JSON.stringify(existingDrafts));
+
+  alert("Draft Saved!");
+  setIsClicked(false);
+  setRefresh(!refresh);
+  setBlogData({
+    title: "",
+    paragraph: "",
+    image: null,
+  });
+};
+
+export const submitBlog = async (blogData, setBlogData, setIsBlogCreated, setIsClicked) => {
+  const requestData = {...blogData, username: localStorage.getItem('username')};
+
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/createBlog`,
+      {
+        method: "POST",
+        body: JSON.stringify(requestData),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.ok) {
+      alert("Blog Created!");
+      setIsBlogCreated(true);
+      setIsClicked(false);
+      setBlogData({
+        title: "",
+        paragraph: "",
+        image: null,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
 export const blogView = (navigate, blog) => {
   navigate("/blog", { state: { blog } });
 };
+
 

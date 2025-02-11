@@ -1,55 +1,100 @@
-/* Style for the comments heading */
-.heading{
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    text-align: left;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    padding-left: 10px;
-    border-left: 4px solid #333;
+/* Style for the main comment section */
+.comment-content-container {
+  width: 600px;
+  max-width: 100%; /* Ensures responsiveness */
+  margin: 0 auto; /* Centers it on the page */
+}
+
+/* Heading Style */
+.heading {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-align: left; /* Ensuring it's left-aligned */
+  padding-left: 10px;
+  color: #333;
 }
 
 /* Comment container */
 .all-comments {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 500px;
-    margin: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
-/* Individual comment box */
+/* Individual comment block */
+.main-comment-container {
+  width: 100%; /* Ensures it doesn't expand beyond 600px */
+  background-color: #f5f5f5; /* Softer background */
+  padding: 16px; /* Increased padding for better spacing */
+  margin-bottom: 12px;
+  border-radius: 10px; /* Softer rounded edges */
+  border: 1px solid #e0e0e0; /* Light border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); /* Subtle depth */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  word-wrap: break-word; /* Prevents text overflow */
+  overflow-wrap: break-word; /* Ensures long words break properly */
+}
+
+.main-comment-container:hover {
+  transform: scale(1.03); /* Slightly increased hover effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Comment content */
 .comment-item {
-   width: 100%;
-    cursor: pointer;
-    background: #f8f9fa;
-    padding: 10px 15px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
-.comment-item:hover {
-    transform: translateY(-2px);
-}
-
-/* Comment text */
 .comment-item p {
-    font-size: 14px;
-    color: #444;
-    margin-bottom: 5px;
+  margin: 0;
+  font-size: 17px; /* Slightly increased for better readability */
+  line-height: 1.5;
+  color: #333;
 }
 
-/* Username style */
 .comment-item span {
-    font-size: 12px;
-    font-weight: bold;
-    color: #007bff;
-    display: block;
+  font-size: 14px;
+  color: #777;
+  margin-top: 8px;
+  font-style: italic;
 }
+
+/* Button container */
+.button-class {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Button styling */
+.button-design {
+  background-color: #4a4a4a; /* Softer dark gray instead of harsh black */
+  color: white;
+  border: none;
+  padding: 8px 14px; /* Slightly increased padding */
+  border-radius: 6px; /* More rounded corners */
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button-design:hover {
+  background-color: #575757; /* Slightly lighter on hover */
+}
+
+/* Input field styling for the edit mode */
+input, textarea {
+  border-radius: 6px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  width: 100%;
+  font-size: 15px;
+}
+

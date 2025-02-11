@@ -93,8 +93,8 @@ const MyBlogs = () => {
     fetchMyBlogs(setMyBlogs); // Use the API function to fetch blogs
   }, [isBlogCreated]);
 
-  const blogView = (blog) => {
-    navigate("/blog", { state: { blog } });
+  const blogView = (blogId) => {
+    navigate("/blog", { state: { blogId } });
   }
 
   return (
@@ -106,7 +106,7 @@ const MyBlogs = () => {
             <li
               key={blog._id}
               className="blog-item"
-              onClick={() => blogView(blog)}
+              onClick={() => blogView(blog._id)}
             >
               <div className="title">{blog.title}</div>
               <div className="paragraph">{blog.paragraph}</div>

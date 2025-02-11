@@ -127,9 +127,7 @@ const server = http.createServer((req, res) => {
           const existingBlog = await Blogs.findOne({_id: data._id});
           
           if(existingBlog){
-            const result = await Blogs.findByIdAndUpdate(data._id, data, {
-                new: true,
-            });
+            await Blogs.findByIdAndUpdate(data._id, data, {new: true});
           }
 
           else{
@@ -175,6 +173,29 @@ const server = http.createServer((req, res) => {
       }
 
     } 
+
+    else if(req.url === "/getSingleBlog" && req.method === 'POST'){
+      let body='';
+      
+      req.on('data', (chunk)=> body+=chunk);
+
+      try {
+        req.on('end', async()=>{
+          const data = JSON.parse(body);
+          const blog = await Blogs.findOne({_id: data});
+
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify(blog));
+        })
+     
+      } catch (error) {
+        console.log(error);
+        res.statusCode = 500;
+        res.end("Error fetching blog");
+      }
+    }
+
     
     else if (req.url === "/myBlogs" && req.method === "POST") {
       console.log("myblog");
@@ -215,29 +236,6 @@ const server = http.createServer((req, res) => {
         res.end(JSON.stringify(error));
       }
     } 
-    
-    else if (req.url === "/editBlog" && req.method === "PUT") {
-      let body = "";
-
-      req.on("data", (chunk) => (body += chunk));
-
-      try {
-        req.on("end", async () => {
-            const data = JSON.parse(body)
-            const result = await Blogs.findByIdAndUpdate(data._id, data, {
-            new: true,
-          });
-
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.end();
-        });
-      } catch (error) {
-        console.log(error);
-        res.statusCode = 400;
-        res.end(JSON.stringify(error));
-      }
-    } 
 
     else if(req.url === "/createComment" && req.method === "POST"){
       let body='';
@@ -245,14 +243,23 @@ const server = http.createServer((req, res) => {
         
       try {
         req.on('end', async()=>{
-          const data = JSON.parse(body);
-          console.log(data);
-          await Comments.create(data);
-          res.statusCode = 200;
-          res.setHeader("Content-Type", "application/json");
-          res.end(JSON.stringify("Comment Created!"));
-        })
+          const data = JSON.parse(body); 
 
+          const existingComment = await Comments.findOne({_id: data._id});
+
+          if(existingComment){
+            await Comments.findByIdAndUpdate(data._id, data, {new: true});
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify("Comment Edited!"));
+          }
+          else{
+            await Comments.create(data);
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "application/json");
+            res.end(JSON.stringify("Comment Created!"));
+          }
+        })
       } catch (error) {
         console.log(error);
         res.statusCode = 400;
@@ -282,13 +289,31 @@ const server = http.createServer((req, res) => {
       }
     }
 
+    else if(req.url === '/deleteComment' && req.method === 'POST'){
+      let body = '';
+      req.on('data', (chunk) => body += chunk);
+
+      try {
+        req.on('end', async() => {
+          const commentId = JSON.parse(body);
+          await Comments.deleteOne({_id: commentId});
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify("Comment Deleted!"));
+        })
+        
+      } catch (error) {
+        console.log(error);
+        res.statusCode = 400;
+        res.end(JSON.stringify(error));
+      }
+    }
+
     
     else if (req.url === "/protected" && req.method === "POST") {
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ message: "User Valid" }));
     }
-
-
   };
 
 

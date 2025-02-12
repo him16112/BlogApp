@@ -6,7 +6,7 @@ const Modal = ({blog, handleChange, handleImageChange, onSubmit, onSave, onClose
         <>
            <div className="modal">
             <div className="modal-content">
-              <h2>Edit Blog</h2>
+              <h2>Create Blog</h2>
               <div className="form-group">
                 <textarea
                   placeholder="Title"

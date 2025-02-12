@@ -1,3 +1,5 @@
+import { setIsBlogCreated, setRefresh } from "./redux/BlogSlice";
+
 // Helper function to handle form field changes
 export const handleChange = (e, blog, setBlog) => {
   const { name, value } = e.target;
@@ -34,7 +36,7 @@ const getBase64Image = (imageFile) => {
 // };
 
 
-export const saveDraft = async (blogData, setBlogData, setIsClicked, setRefresh, refresh) => {
+export const saveDraft = async (blogData, setBlogData, setIsClicked, dispatch) => {
   const loggedinName = localStorage.getItem("username");
   const requestData = {...blogData, username: loggedinName};
   let existingDrafts = JSON.parse(localStorage.getItem(loggedinName)) || [];
@@ -43,7 +45,7 @@ export const saveDraft = async (blogData, setBlogData, setIsClicked, setRefresh,
 
   alert("Draft Saved!");
   setIsClicked(false);
-  setRefresh(!refresh);
+  dispatch(setRefresh());
   setBlogData({
     title: "",
     paragraph: "",
@@ -51,7 +53,8 @@ export const saveDraft = async (blogData, setBlogData, setIsClicked, setRefresh,
   });
 };
 
-export const submitBlog = async (blogData, setBlogData, setIsBlogCreated, setIsClicked) => {
+
+export const submitBlog = async (blogData, setBlogData, dispatch, setIsClicked) => {
   const requestData = {...blogData, username: localStorage.getItem('username')};
 
   try {
@@ -70,7 +73,7 @@ export const submitBlog = async (blogData, setBlogData, setIsBlogCreated, setIsC
 
     if (response.ok) {
       alert("Blog Created!");
-      setIsBlogCreated(true);
+      dispatch(setIsBlogCreated())
       setIsClicked(false);
       setBlogData({
         title: "",

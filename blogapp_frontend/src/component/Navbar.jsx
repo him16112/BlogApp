@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState} from "react";
 import { useNavigate } from "react-router";
 import "../styles/Navbar.css";
-import { BlogContext } from "../context/Context";
+import {useDispatch } from 'react-redux';
 import Modal from "./Modal";
 import { handleChange, handleImageChange, submitBlog, saveDraft } from "../globalfunction";
 
@@ -10,14 +10,11 @@ const Navbar = () => {
   const [blogData, setBlogData] = useState({
     title: "",
     paragraph: "",
-    image: null,
-  });
-
-  const { setIsBlogCreated } = useContext(BlogContext);
-  const { refresh, setRefresh } = useContext(BlogContext);
-  const [mssg, setMssg] = useState(null);
+    image: null
+  }); 
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     setIsClicked(!isClicked);
@@ -64,8 +61,8 @@ const Navbar = () => {
           blog={blogData}
           handleChange={(e) => handleChange(e, blogData, setBlogData)}
           handleImageChange={(e) => handleImageChange(e, blogData, setBlogData)}
-          onSubmit={() => submitBlog(blogData, setBlogData, setIsBlogCreated, setIsClicked)}
-          onSave={() => saveDraft(blogData, setBlogData, setIsClicked, setRefresh, refresh)}
+          onSubmit={() => submitBlog(blogData, setBlogData, dispatch, setIsClicked)}
+          onSave={() => saveDraft(blogData, setBlogData, setIsClicked, dispatch)}
           onClose={() => setIsClicked(false)}
         />
       )}

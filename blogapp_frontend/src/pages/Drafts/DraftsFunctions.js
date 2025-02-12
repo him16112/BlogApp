@@ -1,3 +1,5 @@
+import { setRefresh } from "../../redux/BlogSlice";
+
 // Function to fetch drafts from localStorage
 export const fetchDrafts = () => {
   return (
@@ -6,7 +8,7 @@ export const fetchDrafts = () => {
 };
 
 // Function to publish a draft
-export const publishDraft = async (draft, index, refresh, setRefresh) => {
+export const publishDraft = async (draft, index, dispatch) => {
   try {
     const response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/createBlog`,
@@ -22,8 +24,8 @@ export const publishDraft = async (draft, index, refresh, setRefresh) => {
 
     if (response.ok) {
       alert("Blog Created!");
-      deleteDraft(index, setRefresh);
-      setRefresh(!refresh);
+      deleteDraft(index, dispatch);
+      
     }
   } catch (error) {
     console.log(error);
@@ -31,7 +33,7 @@ export const publishDraft = async (draft, index, refresh, setRefresh) => {
 };
 
 // Function to edit a draft in localStorage
-export const editDraft = (index, blog, refresh, setRefresh, setIsEdited) => {
+export const editDraft = (index, blog, dispatch, setIsEdited) => {
   const drafts = fetchDrafts();
   const result = drafts.map((draft, ind) => (ind === index ? blog : draft));
 
@@ -39,17 +41,17 @@ export const editDraft = (index, blog, refresh, setRefresh, setIsEdited) => {
     localStorage.getItem("username"),
     JSON.stringify(result)
   );
-  setRefresh(!refresh);
+  dispatch(setRefresh());
   setIsEdited(false);
 };
 
 // Function to delete a draft
-export const deleteDraft = (index, setRefresh) => {
+export const deleteDraft = (index, dispatch) => {
   let drafts = fetchDrafts();
   drafts.splice(index, 1);
   localStorage.setItem(
     localStorage.getItem("username"),
     JSON.stringify(drafts)
   );
-  setRefresh((prev) => !prev);
+  dispatch(setRefresh());
 };

@@ -1,5 +1,7 @@
+import { setIsBlogCreated } from "../../redux/BlogSlice";
+
 // Function to fetch blogs from the backend
-export const fetchBlogs = async (setBlogs, setIsBlogCreated) => {
+export const fetchBlogs = async (setBlogs, dispatch) => {
   try {
     const response = await fetch(
       `${process.env.REACT_APP_BACKEND_URL}/getAllBlogs`,
@@ -19,7 +21,7 @@ export const fetchBlogs = async (setBlogs, setIsBlogCreated) => {
   } catch (error) {
     console.log(error);
   } finally {
-    setIsBlogCreated(false);
+    dispatch(setIsBlogCreated());
   }
 };
 

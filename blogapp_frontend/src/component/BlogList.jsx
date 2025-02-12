@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/MyBlogs.css";
 
-const BlogList = ({ blog, index, onEdit, onDelete, onPublish, onComments }) => {
+const BlogList = ({ blog, index, onEdit, onDelete, onPublish }) => {
   return (
     <div className="blog-box">
       <h3 className="title-blog">{blog.title}</h3>
@@ -27,7 +27,6 @@ const BlogList = ({ blog, index, onEdit, onDelete, onPublish, onComments }) => {
         {onDelete && (
           <button onClick={() => onDelete(index)}>Delete</button>
         )}
-  
         
       </div>
     </div>

@@ -6,12 +6,13 @@ import Blog from "./pages/Blog/Blog";
 import ProtectedRoute from "./component/ProtectedRoute";
 import Drafts from "./pages/Drafts/Drafts";
 import MyBlogs from "./pages/MyBlogs/MyBlogs";
-import { BlogProvider } from './context/Context';
+import { Provider } from 'react-redux';
+import Store from "./redux/Store";
 
 const App = () => {
   return (
     <>
-    <BlogProvider>
+   <Provider store={Store}>
       <BrowserRouter>
         <Routes>
           <Route path="/registration" element={<Registration />} />
@@ -24,7 +25,8 @@ const App = () => {
           </Route>
         </Routes>
       </BrowserRouter>
-      </BlogProvider>
+      </Provider>
+     
     </>
   )
 }

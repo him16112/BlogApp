@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import "../../styles/Blog.css";
 import Navbar from "../../component/Navbar";
@@ -9,7 +9,9 @@ import { deleteBlog, editBlog } from "../MyBlogs/MyBlogsApi";
 import Modal from "../../component/Modal";
 import { handleChange, handleImageChange } from "../../globalfunction";
 import { getAllComments, commentCreate } from "./BlogFunction"; // Import new functions
-import { BlogContext } from "../../context/Context";
+import { useDispatch } from "react-redux";
+import { setIsEditButtonClicked } from "../../redux/BlogSlice";
+
 
 const Blog = () => {
   const [data, setData] = useState(null);
@@ -21,7 +23,7 @@ const Blog = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { blogId } = location.state || {};
-  const {isEditButtonClicked, setIsEditButtonClicked} = useContext(BlogContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (blogId) {
@@ -52,7 +54,7 @@ const Blog = () => {
 
       fetchSingleBlog(blogId);
     }
-  }, [isEdited]);
+  }, [isEdited, blogId]);
 
   useEffect(() => {
     if (data) {
@@ -116,7 +118,7 @@ const Blog = () => {
       if(response.ok){
         alert("Comment Edited");
         setIsclicked(!isClicked);
-        setIsEditButtonClicked(!isEditButtonClicked)
+        dispatch(setIsEditButtonClicked())
       }
 
    } catch (error) {

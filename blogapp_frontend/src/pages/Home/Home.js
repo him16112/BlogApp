@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../../component/Navbar';
-import {BlogContext} from "../../context/Context"
 import "../../styles/Home.css";
 import { fetchBlogs , blogView} from './HomeFunctions';
 
 const Home = () => {
     const [blogs, setBlogs] = useState([]);
-    const { isBlogCreated, setIsBlogCreated } = useContext(BlogContext); 
+    const dispatch = useDispatch();
+    const isBlogCreated = useSelector(state => state.Blog.isBlogCreated);
     const navigate = useNavigate();
     
 
     useEffect(() => {
-      fetchBlogs(setBlogs, setIsBlogCreated);
-    }, [isBlogCreated, setIsBlogCreated]);
+      fetchBlogs(setBlogs, dispatch);
+    }, [isBlogCreated, dispatch]);
 
     return (
         <>

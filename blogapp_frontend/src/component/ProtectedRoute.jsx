@@ -37,7 +37,7 @@ const ProtectedRoute = () => {
         };
 
         checkTokenValidity();
-    }, [location.pathname]);
+    }, [location.pathname, navigate]);
 
     return <Outlet />;
 };

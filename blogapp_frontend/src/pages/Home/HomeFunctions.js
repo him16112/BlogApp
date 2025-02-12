@@ -1,31 +1,14 @@
-import { setIsBlogCreated } from "../../redux/slice/BlogSlice";
+import { fetchBlogs } from "../../redux/slice/BlogSlice";
 
-// Function to fetch blogs from the backend
-export const fetchBlogs = async (setBlogs, dispatch) => {
-  try {
-    const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/getAllBlogs`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
-      }
-    );
-
-    if (response.ok) {
-      const data = await response.json();
-      setBlogs(data);
+export const getAllBlogs = async(dispatch, setBlogs) => {
+    try {
+        const response = await dispatch(fetchBlogs());
+         setBlogs(response.payload);
+    } catch (error) {
+        console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  } finally {
-    dispatch(setIsBlogCreated());
-  }
-};
+}
 
-// Function to navigate to the specific blog view
-export const blogView = (navigate, blogId) => {
-  navigate("/blog", { state: { blogId } });
+export const blogView = (blogId, navigate) => {
+    navigate("/blog", { state: { blogId } });
 };

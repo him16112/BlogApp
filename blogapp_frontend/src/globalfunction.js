@@ -1,4 +1,4 @@
-import { setIsBlogCreated } from "./redux/slice/BlogSlice";
+import { setIsBlogCreated , createBlog} from "./redux/slice/BlogSlice";
 import {setRefresh} from "./redux/slice/DraftSlice"
 
 // Helper function to handle form field changes
@@ -44,35 +44,20 @@ export const saveDraft = async (blogData, setBlogData, setIsClicked, dispatch) =
 
 
 export const submitBlog = async (blogData, setBlogData, dispatch, setIsClicked) => {
-  const requestData = {...blogData, username: localStorage.getItem('username')};
 
   try {
-    const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/createBlog`,
-      {
-        method: "POST",
-        body: JSON.stringify(requestData),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
-      }
-    );
+      const requestData = {...blogData, username: localStorage.getItem('username')};
+      await dispatch(createBlog(requestData));
 
-    if (response.ok) {
       alert("Blog Created!");
-      dispatch(setIsBlogCreated())
+      dispatch(setIsBlogCreated());
       setIsClicked(false);
-      setBlogData({
-        title: "",
-        paragraph: "",
-        image: null,
-      });
-    }
+      setBlogData({ title: "", paragraph: "", image: null });
+     
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
+  
 };
 
 

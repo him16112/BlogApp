@@ -1,4 +1,4 @@
-import { setRefresh } from "../../redux/BlogSlice";
+import { setRefresh } from "../../redux/slice/DraftSlice";
 
 // Function to fetch drafts from localStorage
 export const fetchDrafts = () => {
@@ -25,7 +25,6 @@ export const publishDraft = async (draft, index, dispatch) => {
     if (response.ok) {
       alert("Blog Created!");
       deleteDraft(index, dispatch);
-      
     }
   } catch (error) {
     console.log(error);

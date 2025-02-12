@@ -1,4 +1,4 @@
-import { setIsBlogCreated } from "../../redux/BlogSlice";
+import { setIsBlogCreated } from "../../redux/slice/BlogSlice";
 
 // Function to fetch blogs from the backend
 export const fetchBlogs = async (setBlogs, dispatch) => {

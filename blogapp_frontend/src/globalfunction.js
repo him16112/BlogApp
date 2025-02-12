@@ -1,4 +1,5 @@
-import { setIsBlogCreated, setRefresh } from "./redux/BlogSlice";
+import { setIsBlogCreated } from "./redux/slice/BlogSlice";
+import {setRefresh} from "./redux/slice/DraftSlice"
 
 // Helper function to handle form field changes
 export const handleChange = (e, blog, setBlog) => {
@@ -22,18 +23,6 @@ const getBase64Image = (imageFile) => {
     reader.readAsDataURL(imageFile); // Convert image to base64
   });
 };
-
-// export const validateData = (data, setMssg) => {
-//   // Validation for title and paragraph
-//   if (!data.title || !data.paragraph) {
-//     if (!data.title) {
-//       setMssg("Title is required!");
-//     } else if (!data.paragraph) {
-//       setMssg("Paragraph is required!");
-//     }
-//     return null; // Return null if validation fails
-//   }
-// };
 
 
 export const saveDraft = async (blogData, setBlogData, setIsClicked, dispatch) => {

@@ -10,7 +10,7 @@ import Modal from "../../component/Modal";
 import { handleChange, handleImageChange } from "../../globalfunction";
 import { getAllComments, commentCreate } from "./BlogFunction"; // Import new functions
 import { useDispatch } from "react-redux";
-import { setIsEditButtonClicked } from "../../redux/BlogSlice";
+import { setIsEditButtonClicked } from "../../redux/slice/CommentSlice";
 
 
 const Blog = () => {

@@ -13,7 +13,7 @@ const Drafts = () => {
   const [index, setIndex] = useState(null);
   const [blog, setBlog] = useState({});
   const dispatch = useDispatch();
-  const refresh = useSelector(state => state.Blog.refresh);
+  const refresh = useSelector(state => state.Draft.refresh);
 
   useEffect(() => {
     const savedDrafts = fetchDrafts(); // Use the function to fetch drafts

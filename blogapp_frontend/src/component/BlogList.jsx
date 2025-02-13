@@ -6,11 +6,13 @@ const BlogList = ({ blog, index, onEdit, onDelete, onPublish }) => {
     <div className="blog-box">
       <h3 className="title-blog">{blog.title}</h3>
       <p>{blog.paragraph}</p>
+      
       {blog.username && (
         <p>
           <strong>Written by:</strong> {blog.username}
         </p>
       )}
+
       {blog.image && (
         <div className="image-container">
           <img src={blog.image} alt="Blog" />
@@ -19,13 +21,13 @@ const BlogList = ({ blog, index, onEdit, onDelete, onPublish }) => {
 
       <div className="button-container">
         {onPublish && (
-          <button onClick={() => onPublish(blog, index)}>Publish</button>
+          <button onClick={onPublish}>Publish</button>
         )}
         {onEdit && (
-          <button onClick={() => onEdit(blog, index)}>Edit</button>
+          <button onClick={onEdit}>Edit</button>
         )}
         {onDelete && (
-          <button onClick={() => onDelete(index)}>Delete</button>
+          <button onClick={onDelete}>Delete</button>
         )}
         
       </div>

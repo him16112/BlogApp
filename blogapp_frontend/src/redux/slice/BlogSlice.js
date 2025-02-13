@@ -23,6 +23,7 @@ export const fetchBlogs = createAsyncThunk("fetchBlogs", async (_, { rejectWithV
   }
 });
 
+
 export const createBlog = createAsyncThunk("createBlog", async (blogData, { rejectWithValue }) => {
   try {
     const response = await fetch(
@@ -48,6 +49,102 @@ export const createBlog = createAsyncThunk("createBlog", async (blogData, { reje
   }
 });
 
+
+export const fetchMyBlogs = createAsyncThunk("fetchMyBlogs", async({rejectWithValue}) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/myBlogs`, {
+      method: "POST",
+      body: JSON.stringify(localStorage.getItem("username")),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    });
+     
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+});
+
+
+export const deleteBlogCall = createAsyncThunk("deleteBlogCall", async(id, {rejectWithValue}) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/deleteBlog`, {
+      method: "POST",
+      body: JSON.stringify(id),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+})
+
+
+export const editBlogCall = createAsyncThunk("editBlogCall", async(blogData, {rejectWithValue}) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/createBlog`, {
+      method: "POST",
+      body: JSON.stringify(blogData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      credentials: "include",
+    });
+     
+    if (!response.ok) {
+      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    return rejectWithValue(error.message);
+  }
+})
+
+
+export const fetchSingleBlogCall = createAsyncThunk("fetchSingleBlogCall", async(id, {rejectWithValue}) => {
+ try {
+  const response = await fetch(
+    `${process.env.REACT_APP_BACKEND_URL}/getSingleBlog`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify(id),
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(`Error ${response.status}: ${response.statusText}`);
+  }
+
+  return await response.json();
+ } catch (error) {
+  return rejectWithValue(error.message);
+ }
+})
+
+
 const BlogSlice = createSlice({
   name: "Blog",
   initialState: {
@@ -68,7 +165,7 @@ const BlogSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchBlogs.fulfilled, (state, action) => {
+      .addCase(fetchBlogs.fulfilled, (state) => {
         state.loading = false;
       })
       .addCase(fetchBlogs.rejected, (state, action) => {
@@ -76,19 +173,29 @@ const BlogSlice = createSlice({
         state.error = action.payload || "Failed to fetch blogs";
       })
 
-      .addCase(createBlog.pending, (state) => {
+      .addCase(fetchMyBlogs.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(createBlog.fulfilled, (state, action) => {
+      .addCase(fetchMyBlogs.fulfilled, (state) => {
         state.loading = false;
-        state.isBlogCreated = true;
-        state.blogs.push(action.payload);
       })
-      .addCase(createBlog.rejected, (state, action) => {
+      .addCase(fetchMyBlogs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to create blog";
-      });
+      })
+        
+      .addCase(fetchSingleBlogCall.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSingleBlogCall.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(fetchSingleBlogCall.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Failed to fetch blog";
+      })
   },
 });
 

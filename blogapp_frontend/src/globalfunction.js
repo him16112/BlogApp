@@ -44,11 +44,9 @@ export const saveDraft = async (blogData, setBlogData, setIsClicked, dispatch) =
 
 
 export const submitBlog = async (blogData, setBlogData, dispatch, setIsClicked) => {
-
   try {
       const requestData = {...blogData, username: localStorage.getItem('username')};
       await dispatch(createBlog(requestData));
-
       alert("Blog Created!");
       dispatch(setIsBlogCreated());
       setIsClicked(false);

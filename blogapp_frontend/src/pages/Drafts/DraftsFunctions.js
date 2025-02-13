@@ -1,4 +1,4 @@
-import { setRefresh } from "../../redux/slice/DraftSlice";
+import { setRefresh, publishDraftCall } from "../../redux/slice/DraftSlice";
 
 // Function to fetch drafts from localStorage
 export const fetchDrafts = () => {
@@ -10,22 +10,9 @@ export const fetchDrafts = () => {
 // Function to publish a draft
 export const publishDraft = async (draft, index, dispatch) => {
   try {
-    const response = await fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/createBlog`,
-      {
-        method: "POST",
-        body: JSON.stringify(draft),
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        credentials: "include",
-      }
-    );
-
-    if (response.ok) {
-      alert("Blog Created!");
-      deleteDraft(index, dispatch);
-    }
+    await dispatch(publishDraftCall(draft));
+    alert("Blog Created!");
+    deleteDraft(index, dispatch);
   } catch (error) {
     console.log(error);
   }

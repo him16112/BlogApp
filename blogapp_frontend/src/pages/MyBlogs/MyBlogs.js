@@ -26,7 +26,9 @@ const MyBlogs = () => {
     <>
       <Navbar />
       {loading ? (
-        <p>My Blogs Loading...</p>
+        <div className="loading-container">
+          <p>My Blogs Loading...</p>
+        </div>
       ) : (
         <div className="home-container">
           <ul className="blog-list">

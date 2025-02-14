@@ -12,38 +12,37 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 const Blog = () => {
-  const [data, setData] = useState(null);
   const [editedData, setEditedData] = useState(null);
   const [comment, setComment] = useState({content:'', username:'', blogId: ''});
-  const [allComments, setAllComments] = useState([]);
   const [isEdited, setIsEdited] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { blogId } = location.state || {};
   const dispatch = useDispatch();
+  const { blogId } = location.state || {};
   const isCommentRefreshed = useSelector(state => state.Comment.isCommentRefreshed);
+  const blog = useSelector(state => state.Blog.blog);
+  const allComments = useSelector(state => state.Comment.allComments);
 
   useEffect(() => {
     if (blogId) {
      const funCall = async() => {
-        await fetchSingleBlog(blogId, setData, setEditedData, dispatch);
+        await fetchSingleBlog(blogId, setEditedData, dispatch);
        } 
        funCall();
     }
   }, [isEdited, blogId, dispatch]);
 
   useEffect(() => {
-    if (data) {
+    if (blogId) {
       const funCall = async() => {
-        await getAllComments(data._id, setAllComments, dispatch);
+        await getAllComments(blogId, dispatch);
       }
       funCall();
     }
-  }, [isCommentRefreshed, data, dispatch]);
+  }, [isCommentRefreshed, blogId, dispatch]);
 
   const handleDelete = async () => {
-    await deleteBlog(data._id, dispatch);
-    setData(null); // Remove blog from UI
+    await deleteBlog(blogId, dispatch);
     setEditedData(null);
     navigate("/");
   };
@@ -57,19 +56,20 @@ const Blog = () => {
     setIsEdited(!isEdited);
   };
 
+
   return (
     <>
       <Navbar />
-      {data &&(
+      {blog &&(
         <div className="blog-container">
-          {localStorage.getItem("username") === data.username ? (
+          {localStorage.getItem("username") === blog.username ? (
             <BlogList
-              blog={data}
+              blog={blog}
               onDelete={handleDelete}
               onEdit={() => setIsEdited(!isEdited)}
             />
           ) : (
-            <BlogList blog={data} />
+            <BlogList blog={blog} />
           )}
 
           <CommentCreate
@@ -81,7 +81,7 @@ const Blog = () => {
             BlogId={blogId}
           />
 
-          <AllComments allComments={allComments} blog={data} /> 
+          <AllComments allComments={allComments} blog={blog} /> 
         </div>
       )}
       

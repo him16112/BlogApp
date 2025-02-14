@@ -50,7 +50,7 @@ export const createBlog = createAsyncThunk("createBlog", async (blogData, { reje
 });
 
 
-export const fetchMyBlogs = createAsyncThunk("fetchMyBlogs", async({rejectWithValue}) => {
+export const fetchMyBlogs = createAsyncThunk("fetchMyBlogs", async(_, {rejectWithValue}) => {
   try {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/myBlogs`, {
       method: "POST",
@@ -151,6 +151,9 @@ const BlogSlice = createSlice({
     isBlogCreated: false,
     error: null,
     loading: false,
+    allBlogs: [],
+    myBlogs: [],
+    blog: {}
   },
 
   reducers: {
@@ -165,8 +168,9 @@ const BlogSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchBlogs.fulfilled, (state) => {
+      .addCase(fetchBlogs.fulfilled, (state, action) => {
         state.loading = false;
+        state.allBlogs = action.payload;
       })
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.loading = false;
@@ -177,8 +181,9 @@ const BlogSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchMyBlogs.fulfilled, (state) => {
+      .addCase(fetchMyBlogs.fulfilled, (state, action) => {
         state.loading = false;
+        state.myBlogs = action.payload;
       })
       .addCase(fetchMyBlogs.rejected, (state, action) => {
         state.loading = false;
@@ -189,8 +194,9 @@ const BlogSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchSingleBlogCall.fulfilled, (state) => {
+      .addCase(fetchSingleBlogCall.fulfilled, (state, action) => {
         state.loading = false;
+        state.blog = action.payload;
       })
       .addCase(fetchSingleBlogCall.rejected, (state, action) => {
         state.loading = false;

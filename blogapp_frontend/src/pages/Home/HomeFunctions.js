@@ -1,9 +1,8 @@
 import { fetchBlogs } from "../../redux/slice/BlogSlice";
 
-export const getAllBlogs = async(dispatch, setBlogs) => {
+export const getAllBlogs = async(dispatch) => {
     try {
-        const response = await dispatch(fetchBlogs());
-         setBlogs(response.payload);
+        await dispatch(fetchBlogs());
     } catch (error) {
         console.log(error);
     }

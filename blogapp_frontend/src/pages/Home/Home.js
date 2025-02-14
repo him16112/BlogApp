@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../../component/Navbar';
@@ -11,11 +11,11 @@ const Home = () => {
     const isBlogCreated = useSelector(state => state.Blog.isBlogCreated);
     const loading = useSelector(state => state.Blog.loading);
     const error = useSelector(state => state.Blog.error);
-    const [blogs, setBlogs] = useState([]);
+    const blogs = useSelector(state => state.Blog.allBlogs);
 
     useEffect(() => {
         const fetchBlogs = async () => {
-            await getAllBlogs(dispatch, setBlogs);
+            await getAllBlogs(dispatch);
         };
         fetchBlogs();
     }, [isBlogCreated, dispatch]);

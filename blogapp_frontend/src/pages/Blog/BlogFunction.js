@@ -1,10 +1,9 @@
 import { fetchSingleBlogCall, editBlogCall, deleteBlogCall } from "../../redux/slice/BlogSlice";
 import { commentCreateCall, commentDeleteCall, commentEditCall, getAllCommentsCall, setIsCommentRefreshed, setIsEditButtonClicked } from "../../redux/slice/CommentSlice";
 
-export const getAllComments = async (blogId, setAllComments, dispatch) => {
+export const getAllComments = async (blogId, dispatch) => {
     try {
-      const response = await dispatch(getAllCommentsCall(blogId));
-      setAllComments(response.payload);
+      await dispatch(getAllCommentsCall(blogId));
     } catch (error) {
       console.log(error);
     }
@@ -41,10 +40,9 @@ export  const commentDelete = async(id, dispatch) => {
    }
 };
 
-export const fetchSingleBlog = async(blogId, setData, setEditedData, dispatch) => {
+export const fetchSingleBlog = async(blogId, setEditedData, dispatch) => {
  try {
     const response = await dispatch(fetchSingleBlogCall(blogId));
-    setData(response.payload);
     setEditedData(response.payload);
   } 
   catch (error) {

@@ -112,7 +112,8 @@ const CommentSlice = createSlice({
     isEditButtonClicked: false,
     isCommentRefreshed: false,
     loading: false,
-    error: null
+    error: null,
+    allComments: []
   },
 
   reducers: {
@@ -129,8 +130,9 @@ const CommentSlice = createSlice({
       state.loading = true;
       state.error = null;
      })
-     .addCase(getAllCommentsCall.fulfilled, (state) => {
+     .addCase(getAllCommentsCall.fulfilled, (state, action) => {
       state.loading = false;
+      state.allComments = action.payload
      })
      .addCase(getAllCommentsCall.rejected, (state, action) => {
       state.loading = true;

@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { getMyBlogs } from "./MyBlogsApi";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import Navbar from "../../component/Navbar";
 
 const MyBlogs = () => {
-  const [myBlogs, setMyBlogs] = useState([]);
-  const isBlogCreated = useSelector((state) => state.Blog.isBlogCreated);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isBlogCreated = useSelector((state) => state.Blog.isBlogCreated);
   const loading = useSelector((state) => state.Blog.loading);
+  const myBlogs = useSelector((state) => state.Blog.myBlogs);
 
   useEffect(() => {
     const funCall = async () => {
-      await getMyBlogs(setMyBlogs, dispatch);
+      await getMyBlogs(dispatch);
     };
     funCall();
   }, [isBlogCreated, dispatch]);
